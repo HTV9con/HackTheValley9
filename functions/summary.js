@@ -32,5 +32,6 @@ const run = async () => {
 };
 
 export function onRequest(context) {
-  return new Response(run())
+  let b = await new Response(run())
+  return b
 }
