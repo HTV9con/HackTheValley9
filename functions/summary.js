@@ -22,7 +22,7 @@ const data = {
 
 export async function onRequest(context) {
   const transcript = await client.transcripts.transcribe(data);
-  a = {texts: transcript.text, results: ""}
+  let a = {texts: transcript.text, results: ""}
   for (let result of transcript.auto_highlights_result.results) {
    a.results = a.results + "\n" + result.count + "\n" + result.rank + ";"
  }
