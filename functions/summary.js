@@ -32,5 +32,5 @@ const run = async () => {
 };
 
 export function onRequest(context) {
-  return new Response(["gjhfgfsdgfhgh", run()])
+  return new Response(run())
 }
