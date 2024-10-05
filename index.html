@@ -13,13 +13,21 @@ body {font-family: "Lato", sans-serif}
 
 <!-- Navbar -->
 <div class="w3-top">
-        <button onclick="calc11()"></button>
+        <button onclick="calc11()">Function/</button>
         <a href="https://test-71n.pages.dev/summary">Visit W3Schools.com!</a>
+        <a href="https://summary-test.conversation-sustainability.workers.dev/">https://summary-test.conversation-sustainability.workers.dev/</a>
+        <button onclick="calc12()">Function/</button>
   </div>
+
 <div id="idd"></div>
 <script>
     async function calc11() {
         let response = await fetch(`https://test-71n.pages.dev/summary`)
+        if (response.ok) {window.an = await response.json();document.getElementById('idd').innerHTML=window.an;} else {alert("Error HTTP: " + response.status);}}
+</script>
+        <script>
+    async function calc11() {
+        let response = await fetch(`https://summary-test.conversation-sustainability.workers.dev/`)
         if (response.ok) {window.an = await response.json();document.getElementById('idd').innerHTML=window.an;} else {alert("Error HTTP: " + response.status);}}
 </script>
 
