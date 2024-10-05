@@ -31,7 +31,7 @@ const run = async () => {
   }
 };
 
-export function onRequest(context) {
+export async function onRequest(context) {
   let b = await new Response(run())
   return b
 }
