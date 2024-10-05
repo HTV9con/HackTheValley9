@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+.playback {margin-bottom: 1rem;}
+</style>
+</head>
+<body>
+    <audio class="playback" controls></audio>
+    <button onclick="ToggleMic()">Hello</button>
+<!-- Navbar -->
+<form enctype="multipart/form-data" action="https://mangoplantations.net:8443/conversation" method="POST">
+    <label for="file-upload">Form:</label>
+    <input id="file-upload" type="file" name="file"/>
+ <input type="submit" value="POST to server" id="main-submit"></input>
+  </form>
+<script type = "text/javascript" >
+    //const mic_btn = document.querySelector('#mic')
+const playback = document.querySelector(".playback")
+console.log(playback);
+
+//mic_btn.addEventListener('click', ToggleMic);
+
+let can_record = false;
+let is_recording = false;
+
+let recorder = null;
+
+let chunks = [];
+
+function PrepareAudio() {
+    console.log("Setting up microphone");
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+	navigator.mediaDevices.getUserMedia({
+	    audio: true
+	})
+	.then(SetupStream)
+	.catch(err => {
+	    console.error(err)
+	});
+    }
+}
+PrepareAudio();
+function SetupStream(stream) {
+    recorder = new MediaRecorder(stream);
+
+    recorder.ondataavailable = e=> {
+	chunks.push(e.data);
+    }
+
+    recorder.onstop = e=> {
+	const blob = new Blob(chunks, { type: "audio/mp3; codecs=opus"});
+	chunks = [];
+	const audioURL = window.URL.createObjectURL(blob);
+	playback.src = audioURL;
+	console.log("Fuck");
+    }
+    can_record=true;
+    console.log("Bruh");
+}
+
+function ToggleMic() {
+    if (!can_record) {
+	console.log("fucked");
+	return;
+    }
+    console.log("Actually started");
+
+    is_recording = !is_recording;
+
+    if (is_recording) {
+	console.log("bruh1");
+	recorder.start();
+    }
+    else {
+	recorder.stop();
+	let myForm = document.querySelector("form");
+	document.getElementById("file-upload").value = audioURL
+	myForm.requestSubmit();
+	console.log("bruh2");
+    }
+}
+    
+</script>
+</body>
+</html>
