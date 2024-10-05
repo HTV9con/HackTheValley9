@@ -36,6 +36,6 @@ export default {
   for (let result of transcript.auto_highlights_result.results) {
    a.results = a.results + "\n" + result.count + "\n" + result.rank + ";"
  }
-    return new Response(JSON.stringify(["Hello World!", JSON.stringify(a)]));
+    return new Response(JSON.stringify(a));
   },
 };
