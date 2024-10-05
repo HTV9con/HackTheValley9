@@ -26,10 +26,10 @@ const run = async () => {
 
   for (let result of transcript.auto_highlights_result.results) {
     a.result = a.result + "\n" + result.count + "\n" + result.rank + ";"
-    );
+  }
   return a
   }
-};
+
 
 export async function onRequest(context) {
   let b = await new Response(run())
