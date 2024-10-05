@@ -26,5 +26,5 @@ export async function onRequest(context) {
   for (let result of transcript.auto_highlights_result.results) {
    a.results = a.results + "\n" + result.count + "\n" + result.rank + ";"
  }
-  return new Response(a.json())
+  return new Response(a)
 }
