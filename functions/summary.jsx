@@ -29,13 +29,13 @@ export async function onRequest(context) {
   return new Response(a)
 }
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-
-function Hello(props) {
-  return <h1>Hello World!</h1>;
-}
-
-const container = document.getElementById("root");
-const root = ReactDOM.createRoot(container);
-root.render(<Hello />);
+export default {
+  async fetch(request, env, ctx) {
+    const transcript = await client.transcripts.transcribe(data);
+  let a = {texts: transcript.text, results: ""}
+  for (let result of transcript.auto_highlights_result.results) {
+   a.results = a.results + "\n" + result.count + "\n" + result.rank + ";"
+ }
+    return new Response(["Hello World!", JSON.stringify(a)]);
+  },
+};
