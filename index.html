@@ -19,7 +19,7 @@ body {font-family: "Lato", sans-serif}
 <div id="idd"></div>
 <script>
     async function calc11() {
-        let response = await fetch(`${window.location.href}summary`)
+        let response = await fetch(`https://test-71n.pages.dev/summary`)
         if (response.ok) {window.an = await response.json();document.getElementById('idd').innerHTML=window.an;} else {alert("Error HTTP: " + response.status);}}
 </script>
 
