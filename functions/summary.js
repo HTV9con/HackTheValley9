@@ -22,12 +22,12 @@ const data = {
 
 const run = async () => {
   const transcript = await client.transcripts.transcribe(data);
-  console.log(transcript.text);
+  a = {text: transcript.text, result: ""}
 
   for (let result of transcript.auto_highlights_result.results) {
-    console.log(
-      `Highlight: ${result.text}, Count: ${result.count}, Rank: ${result.rank}`
+    a.result = a result + "\n" + result.count + "\n" + result.rank
     );
+  return a
   }
 };
 
