@@ -20,18 +20,12 @@ const data = {
   auto_highlights: true
 }
 
-const run = async () => {
+export async function onRequest(context) {
   const transcript = await client.transcripts.transcribe(data);
   a = {text: transcript.text, result: ""}
 
   for (let result of transcript.auto_highlights_result.results) {
     a.result = a.result + "\n" + result.count + "\n" + result.rank + ";"
   }
-  return a
-  }
-
-
-export async function onRequest(context) {
-  let b = await new Response(run())
-  return b
+  return new Response(a)
 }
