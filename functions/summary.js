@@ -22,10 +22,10 @@ const data = {
 
 export async function onRequest(context) {
   const transcript = await client.transcripts.transcribe(data);
-  a = {text: transcript.text, result: ""}
-return new Response( transcript.text)
-  for (let result of transcript.auto_highlights_result.results) {
-    a.result = a.result + "\n" + result.count + "\n" + result.rank + ";"
-  }
-  return new Response(a)
+  //a = {text: transcript.text, result: ""}
+  return new Response( transcript.text)
+ // for (let result of transcript.auto_highlights_result.results) {
+//    a.result = a.result + "\n" + result.count + "\n" + result.rank + ";"
+//  }
+//  return new Response(a)
 }
