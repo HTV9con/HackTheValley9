@@ -25,7 +25,7 @@ const run = async () => {
   a = {text: transcript.text, result: ""}
 
   for (let result of transcript.auto_highlights_result.results) {
-    a.result = a result + "\n" + result.count + "\n" + result.rank
+    a.result = a.result + "\n" + result.count + "\n" + result.rank + ";"
     );
   return a
   }
