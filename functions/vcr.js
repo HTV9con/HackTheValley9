@@ -1,5 +1,6 @@
-const mic_btn = document.querySelector('#mic');
-const playback = document.querySelector('.playback');
+//const mic_btn = document.querySelector('#mic')
+const playback = document.querySelector(".playback")
+console.log(playback);
 
 //mic_btn.addEventListener('click', ToggleMic);
 
@@ -12,7 +13,7 @@ let chunks = [];
 
 function PrepareAudio() {
     console.log("Setting up microphone");
-    if (navigator.mediaDecives && navigator.mediaDevices.getUserMedia) {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 	navigator.mediaDevices.getUserMedia({
 	    audio: true
 	})
@@ -22,7 +23,7 @@ function PrepareAudio() {
 	});
     }
 }
-
+PrepareAudio();
 function SetupStream(stream) {
     recorder = new MediaRecorder(stream);
 
@@ -31,24 +32,31 @@ function SetupStream(stream) {
     }
 
     recorder.onstop = e=> {
-	const blob = new Blob(chunks, { type: "audio/ogg; codevs-opus"});
+	const blob = new Blob(chunks, { type: "audio/mp3; codecs=opus"});
 	chunks = [];
-	const audioUrl = window.URL.createObjectURL(blob);
+	const audioURL = window.URL.createObjectURL(blob);
 	playback.src = audioURL;
+	console.log("Fuck");
     }
     can_record=true;
+    console.log("Bruh");
 }
 
 function ToggleMic() {
-    if (!can_record) return;
+    if (!can_record) {
+	console.log("fucked");
+	return;
+    }
+    console.log("Actually started");
 
-    recording =! isrecording;
+    is_recording = !is_recording;
 
     if (is_recording) {
+	console.log("bruh1");
 	recorder.start();
     }
     else {
 	recorder.stop();
+	console.log("bruh2");
     }
 }
-//PrepareAudio();
