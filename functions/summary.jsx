@@ -19,16 +19,6 @@ const data = {
   audio: FILE_URL,
   auto_highlights: true
 }
-
-export async function onRequest(context) {
-  const transcript = await client.transcripts.transcribe(data);
-  let a = {texts: transcript.text, results: ""}
-  for (let result of transcript.auto_highlights_result.results) {
-   a.results = a.results + "\n" + result.count + "\n" + result.rank + ";"
- }
-  return new Response(a)
-}
-
 export default {
   async fetch(request, env, ctx) {
     const transcript = await client.transcripts.transcribe(data);
