@@ -1,4 +1,4 @@
-//-------------------------------------------------------------------
+////-------------------------------------------------------------------
 //>> Server Set-up
 const express = require('express');
 const filter = express();
@@ -64,21 +64,14 @@ filter.use('/media',express.static(path.join(__dirname + '/PUBLIC/media')));
 
 async function getSummary(file){
     const data = {
-      audio: `https://mangoplantations.net/media/${file}`,
+      audio: `https://mangoplantations.net:8443/media/${file}`,
       auto_highlights: true
     };
-     console.log("Text -------------")
+
     const transcript = await client.transcripts.transcribe(data);
-        console.log("Text -------------")
-    console.log(transcript)
-    console.log("Text -------------")
-    let a = {texts: transcript.text, results: ""};
-    for (let result of transcript.auto_highlights_result.results) {
-        a.results = a.results + "\n" + result.count + "\n" + result.rank + ";";
-    }
-    console.log(a)
-    console.log(JSON.stringify(a))
-    return JSON.stringify(a)
+    console.log(transcript.text);
+
+    return transcript.auto_highlights_result.results
   }
 
 
@@ -95,13 +88,9 @@ const upload = multer({ storage })
 
 filter.route('/conversation')
      .post(upload.any('audio'), (req, res) => {
-          console.log(req.files)
-         console.log(JSON.parse(JSON.stringify(req.body)))
-         console.log(req.files)
+         console.log("Audio  -  received")
          decodeAudio("./PUBLIC/media" + "/audio")
-         console.log(upload)
-         getSummary("hello.mp3")
-         res.json(getSummary("hello.mp3"))
+         getSummary("hello.mp3").then((resp) => {res.json(resp)})
          // res.json(getSummary(req.file))
         })
         .post((req, res) => {
