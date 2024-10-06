@@ -8,6 +8,7 @@
 </head>
 
 <body>
+<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
     <div id="header">
         <h1 class="title">Welcome to the Conversation Sustainability Project!</h1>
     </div>
@@ -15,7 +16,7 @@
         <div id="record">
             <button type="button" class="recordButton" onclick="ToggleMic()">Record!</button>
         </div>
-        <form enctype="multipart/form-data" action="https://mangoplantations.net:8443/conversation" method="POST">
+        <form enctype="multipart/form-data" action="https://mangoplantations.net:8443/conversation" method="POST" target="dummyframe">
     <input id="file-upload" type="file" name="audio"/>
   <button type="submit" value="POST to server" id="main-submit">Button to post only form</button>
 	</form>
