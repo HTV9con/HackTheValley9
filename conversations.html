@@ -13,20 +13,13 @@ body {font-family: "Lato", sans-serif}
 <body>
     <audio class="playback" controls></audio>
     <button onclick="ToggleMic()">Hello</button>
-<!-- Navbar -->
 <form enctype="multipart/form-data" action="https://mangoplantations.net:8443/conversation" method="POST">
     <label for="file-upload">Form:</label>
     <input id="file-upload" type="file" name="audio"/>
- <button type="submit" value="POST to server" id="main-submit">Button to post only form</button>
+ <button type="submit" value="POST to server" id="main-submit">Button to post only form</button> Do not delete
   </form>
-  <button onclick="sub()" value="POSssssssT to server" id="main-submits">Button to post only form artifitialy</button>
-    <button onclick="sub2()" value="POSssssssT to server" id="main-submits">Button to via new form object</button>
 <script type = "text/javascript" >
-    //const mic_btn = document.querySelector('#mic')
 const playback = document.querySelector(".playback")
-console.log(playback);
-
-//mic_btn.addEventListener('click', ToggleMic);
 
 let can_record = false;
 let is_recording = false;
@@ -44,7 +37,6 @@ function createFileList(a) {
 }
 
 function PrepareAudio() {
-    console.log("Setting up microphone");
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 	navigator.mediaDevices.getUserMedia({
 	    audio: true
@@ -68,63 +60,28 @@ function SetupStream(stream) {
 	const blob = new Blob(chunks, { type: "audio/mp3"});
 	chunks = [];
 	window.recording = new File([blob], "audio")
-	sub2(window.URL.createObjectURL(blob))
 	window.audioURL = window.URL.createObjectURL(blob);
     let myForm = document.querySelector("form");
         	 document.getElementById("file-upload").files = createFileList(window.recording)
 	playback.src = window.audioURL;
-//	console.log(window.audioURL)
-//	console.log(playback.src)
-	console.log("Fuck");
     }
     can_record=true;
-    console.log("Bruh");
 }
 
 function ToggleMic() {
     if (!can_record) {
-	console.log("fucked");
 	return;
     }
-    console.log("Actually started");
 
     is_recording = !is_recording;
 
     if (is_recording) {
-	console.log("bruh1");
 	recorder.start();
     }
     else {
 	recorder.stop();
-	console.log("bruh2");
     }
 }
-
-function sub(){
-    	let myForm = document.querySelector("form");
-	    document.getElementById("file-upload").value = window.audioURL
-	    console.log(document.getElementById("file-upload").value)
-	    console.log(document.getElementById("file-upload").files)
-	    myform.submit()
-}
-
-async function sub2(gg){
-//	    const formData = new FormData();
-//	    formData.append("audio", window.fil, "audio");
-//	    formData.append("ggg", "gggg", "audio");
-	 //   formData.enctype = "multipart/form-data"
-        let response = await fetch("https://mangoplantations.net:8443/conversation",
-            {method: 'PUT', headers: {'Accept': 'application/json','Content-Type': 'application/json'},body: JSON.stringify({name: gg})})
-        console.log(response)
-
-}
-
-    async function fet(file){
-        let response = await fetch(file);
-        if (response.ok) {window.res = await response;; console.log(window.res)}
-        
-    }
-    
 </script>
 </body>
 </html>

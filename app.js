@@ -25,13 +25,11 @@ function decodeAudio(pathencode) {
     let track = pathencode;//your path to source file
 
     ffmpeg(track)
-    //.setFfmpegPath("C:\\ffmpeg\\bin\\ffmpeg.exe")
     .toFormat('mp3')
     .on('error', (err) => {
         console.log('An error occurred: ' + err.message);
     })
     .on('progress', (progress) => {
-        // console.log(JSON.stringify(progress));
         console.log('Processing: ' + progress.targetSize + ' KB converted');
     })
     .on('end', () => {
@@ -69,8 +67,6 @@ async function getSummary(file){
     };
 
     const transcript = await client.transcripts.transcribe(data);
-    console.log(transcript.text);
-
     return transcript.auto_highlights_result.results
   }
 
@@ -91,28 +87,7 @@ filter.route('/conversation')
          console.log("Audio  -  received")
          decodeAudio("./PUBLIC/media" + "/audio")
          getSummary("hello.mp3").then((resp) => {res.json(resp)})
-         // res.json(getSummary(req.file))
         })
-        .post((req, res) => {
-          console.log(req.files)
-         console.log(JSON.parse(JSON.stringify(req.body)))
-         console.log(req.files)
-         console.log(upload)
-         res.json("gg:audio")
-         // res.json(getSummary(req.file))
-        })
-        .put((req, res) => {
-          console.log(req.files)
-          console.log(JSON.parse(JSON.stringify(req.body)))
-          console.log(req.body)
-          console.log(req.files)
-          res.json("gg")
-         // res.json(getSummary(req.file))
-        })
-     .put(function(req, res) {
-        if(req.query.submit_user_info == "generate"){res.json(stocks_everything("hello.mp3"))
-        }
-     })
-    .get(function(req, res) {
+   .get(function(req, res) {
       res.sendFile(__dirname + "/PUBLIC/conversation.html")
     });
