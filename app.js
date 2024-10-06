@@ -88,6 +88,7 @@ filter.route('/conversation')
          decodeAudio("./PUBLIC/media" + "/audio")
          getSummary("hello.mp3").then((resp) => {res.json(resp)})
         })
+    const noti = new Notification("Hello! Your conversation could use some more:", {resp[0]});	
    .get(function(req, res) {
       res.sendFile(__dirname + "/PUBLIC/conversation.html")
     });
