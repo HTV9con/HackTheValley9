@@ -16,4 +16,6 @@ We built Banter Buddy using a bunch of technologies (which made us question our 
 **What We Learned**
 
 Throughout this project, we learned a lot about the potential of AI to enhance human connection. We realized that even small interventions can make a big difference in how people communicate. We also learned that building a user-friendly interface is crucial for making complex technology accessible to everyone. For our future plans, we are very excited to continue working with and further developing the Banter Buddy application, seeing where it might be applied to use cases across customer service, education, and healthcare. We believe our app can actually make a difference in people's lives, so we're committed to creating the best there is.
+
+
 Slides: https://docs.google.com/presentation/d/1BB4fuibEbHf_t0GeuCwao_-tXsnE8nT_kNBNgIWo26Q/edit#slide=id.p
