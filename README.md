@@ -6,7 +6,7 @@ We thought of the potential that AI has in bringing people together. Our team kn
 
 **Building Banter Buddy**
 
-We built Banter Buddy using a bunch of technologies (which made us question our existence), which include:
+We built Banter Buddy using a bunch of technologies (which made us question our existence), that include:
 
 - Used a VPS for website hosting.
 - HTML, CSS, JavaScript and NodeJS for an intuitive user interface.
