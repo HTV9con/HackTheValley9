@@ -1,0 +1,36 @@
+body {
+    background-image: url(images/backgroundImage.jpg);
+    background-color: #dddddd;
+
+}
+
+#header {
+    font-size: 22px;
+    text-align: center;
+    color: white;
+}
+
+.recordButton {
+    width: 200px;
+    height: 206px;
+    position: fixed;
+    left: 40px;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    text-align: center;
+    color: black;
+    background-color: lightgray;
+}
+
+.recordButton:hover {
+    background-color: rgb(98, 98, 98);
+}
+
+.outputTextarea {
+    position: fixed;
+    left: 300px;
+    top: 110px;
+    width: 1100px;
+    height: 200px;
+}
