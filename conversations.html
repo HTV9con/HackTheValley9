@@ -1,26 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {font-family: "Lato", sans-serif}
-.mySlides {display: none}
-.playback {margin-bottom: 1rem;}
-</style>
-</head>
-<body>
-    <audio class="playback" controls></audio>
-    <button onclick="ToggleMic()">Hello</button>
-<form enctype="multipart/form-data" action="https://mangoplantations.net:8443/conversation" method="POST">
-    <label for="file-upload">Form:</label>
-    <input id="file-upload" type="file" name="audio"/>
- <button type="submit" value="POST to server" id="main-submit">Button to post only form</button> Do not delete
-  </form>
-<script type = "text/javascript" >
-const playback = document.querySelector(".playback")
 
+<body>
+    <div id="header">
+        <h1 class="title">Welcome to the Conversation Sustainability Project!</h1>
+    </div>
+    <div id="center">
+        <div id="record">
+            <button type="button" class="recordButton" onclick="ToggleMic()">Record!</button>
+        </div>
+        <form enctype="multipart/form-data" action="https://mangoplantations.net:8443/conversation" method="POST">
+    <input id="file-upload" type="file" name="audio" />
+  <button type="submit" value="POST to server" id="main-submit">Button to post only form</button>
+	</form>
+    </div>
+<script type = "text/javascript" >
 let can_record = false;
 let is_recording = false;
 
@@ -57,13 +49,15 @@ function SetupStream(stream) {
     }
 
     recorder.onstop = e=> {
+	Notification.requestPermission().then((result) => {
+	    console.log(result);
+	});
 	const blob = new Blob(chunks, { type: "audio/mp3"});
 	chunks = [];
 	window.recording = new File([blob], "audio")
 	window.audioURL = window.URL.createObjectURL(blob);
     let myForm = document.querySelector("form");
         	 document.getElementById("file-upload").files = createFileList(window.recording)
-	playback.src = window.audioURL;
     }
     can_record=true;
 }
@@ -84,4 +78,3 @@ function ToggleMic() {
 }
 </script>
 </body>
-</html>
