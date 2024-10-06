@@ -17,8 +17,9 @@ body {font-family: "Lato", sans-serif}
 <form enctype="multipart/form-data" action="https://mangoplantations.net:8443/conversation" method="POST">
     <label for="file-upload">Form:</label>
     <input id="file-upload" type="file" name="file"/>
- <input type="submit" value="POST to server" id="main-submit"></input>
+ <button onclick="sub2()" value="POST to server" id="main-submit">Button to post</button>
   </form>
+  <button onclick="sub()" value="POSssssssT to server" id="main-submits">FFFF</button>
 <script type = "text/javascript" >
     //const mic_btn = document.querySelector('#mic')
 const playback = document.querySelector(".playback")
@@ -45,6 +46,7 @@ function PrepareAudio() {
 	});
     }
 }
+
 PrepareAudio();
 function SetupStream(stream) {
     recorder = new MediaRecorder(stream);
@@ -56,8 +58,8 @@ function SetupStream(stream) {
     recorder.onstop = e=> {
 	const blob = new Blob(chunks, { type: "audio/mp3; codecs=opus"});
 	chunks = [];
-	const audioURL = window.URL.createObjectURL(blob);
-	playback.src = audioURL;
+	window.audioURL = window.URL.createObjectURL(blob);
+	playback.src = window.audioURL;
 	console.log("Fuck");
     }
     can_record=true;
@@ -79,13 +81,26 @@ function ToggleMic() {
     }
     else {
 	recorder.stop();
-	let myForm = document.querySelector("form");
-	document.getElementById("file-upload").value = audioURL
-	myForm.requestSubmit();
 	console.log("bruh2");
     }
+}
+
+function sub(){
+    	let myForm = document.querySelector("form");
+	document.getElementById("file-upload").value = window.audioURL
+	console.log(document.getElementById("file-upload"))
+	console.log(document.getElementById("file-upload").files)
+}
+
+	function sub2(){
+	    	let myForm = document.querySelector("form");
+	document.getElementById("file-upload").value =window.audioURL
+	console.log(document.getElementById("file-upload"))
+	console.log(document.getElementById("file-upload").files)
+	myForm.requestSubmit();
 }
     
 </script>
 </body>
 </html>
+
