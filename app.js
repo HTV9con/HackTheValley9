@@ -65,7 +65,6 @@ async function getSummary(file){
       audio: `https://mangoplantations.net:8443/media/${file}`,
       auto_highlights: true
     };
-
     const transcript = await client.transcripts.transcribe(data);
     return transcript.auto_highlights_result.results
   }
@@ -88,7 +87,6 @@ filter.route('/conversation')
          decodeAudio("./PUBLIC/media" + "/audio")
          getSummary("hello.mp3").then((resp) => {res.json(resp)})
         })
-    const noti = new Notification("Hello! Your conversation could use some more:", {resp[0]});	
    .get(function(req, res) {
       res.sendFile(__dirname + "/PUBLIC/conversation.html")
     });
