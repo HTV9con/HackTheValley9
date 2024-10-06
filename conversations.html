@@ -16,10 +16,11 @@ body {font-family: "Lato", sans-serif}
 <!-- Navbar -->
 <form enctype="multipart/form-data" action="https://mangoplantations.net:8443/conversation" method="POST">
     <label for="file-upload">Form:</label>
-    <input id="file-upload" type="file" name="file"/>
- <button onclick="sub2()" value="POST to server" id="main-submit">Button to post</button>
+    <input id="file-upload" type="file" name="audio"/>
+ <button type="submit" value="POST to server" id="main-submit">Button to post only form</button>
   </form>
-  <button onclick="sub()" value="POSssssssT to server" id="main-submits">FFFF</button>
+  <button onclick="sub()" value="POSssssssT to server" id="main-submits">Button to post only form artifitialy</button>
+    <button onclick="sub2()" value="POSssssssT to server" id="main-submits">Button to via new form object</button>
 <script type = "text/javascript" >
     //const mic_btn = document.querySelector('#mic')
 const playback = document.querySelector(".playback")
@@ -33,6 +34,14 @@ let is_recording = false;
 let recorder = null;
 
 let chunks = [];
+
+function createFileList(a) {
+  a = [].slice.call(Array.isArray(a) ? a : arguments)
+  for (var c, b = c = a.length, d = !0; b-- && d;) d = a[b] instanceof File
+  if (!d) throw new TypeError('expected argument to FileList is File or array of File objects')
+  for (b = (new ClipboardEvent('')).clipboardData || new DataTransfer; c--;) b.items.add(a[c])
+  return b.files
+}
 
 function PrepareAudio() {
     console.log("Setting up microphone");
@@ -56,10 +65,16 @@ function SetupStream(stream) {
     }
 
     recorder.onstop = e=> {
-	const blob = new Blob(chunks, { type: "audio/mp3; codecs=opus"});
+	const blob = new Blob(chunks, { type: "audio/mp3"});
 	chunks = [];
+	window.recording = new File([blob], "audio")
+	sub2(window.URL.createObjectURL(blob))
 	window.audioURL = window.URL.createObjectURL(blob);
+    let myForm = document.querySelector("form");
+        	 document.getElementById("file-upload").files = createFileList(window.recording)
 	playback.src = window.audioURL;
+//	console.log(window.audioURL)
+//	console.log(playback.src)
 	console.log("Fuck");
     }
     can_record=true;
@@ -87,20 +102,29 @@ function ToggleMic() {
 
 function sub(){
     	let myForm = document.querySelector("form");
-	document.getElementById("file-upload").value = window.audioURL
-	console.log(document.getElementById("file-upload"))
-	console.log(document.getElementById("file-upload").files)
+	    document.getElementById("file-upload").value = window.audioURL
+	    console.log(document.getElementById("file-upload").value)
+	    console.log(document.getElementById("file-upload").files)
+	    myform.submit()
 }
 
-	function sub2(){
-	    	let myForm = document.querySelector("form");
-	document.getElementById("file-upload").value =window.audioURL
-	console.log(document.getElementById("file-upload"))
-	console.log(document.getElementById("file-upload").files)
-	myForm.requestSubmit();
+async function sub2(gg){
+//	    const formData = new FormData();
+//	    formData.append("audio", window.fil, "audio");
+//	    formData.append("ggg", "gggg", "audio");
+	 //   formData.enctype = "multipart/form-data"
+        let response = await fetch("https://mangoplantations.net:8443/conversation",
+            {method: 'PUT', headers: {'Accept': 'application/json','Content-Type': 'application/json'},body: JSON.stringify({name: gg})})
+        console.log(response)
+
 }
+
+    async function fet(file){
+        let response = await fetch(file);
+        if (response.ok) {window.res = await response;; console.log(window.res)}
+        
+    }
     
 </script>
 </body>
 </html>
-
