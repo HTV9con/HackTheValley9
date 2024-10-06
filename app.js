@@ -1,5 +1,3 @@
-
-
 //-------------------------------------------------------------------
 //>> Server Set-up
 const express = require('express');
@@ -14,11 +12,35 @@ const path = require('path')
 //import { AssemblyAI } from "assemblyai"
 const a = require("assemblyai")
 const AssemblyAI = a.AssemblyAI
-//const { AssemblyAI }  = require('assemblyai');
 
 const client = new AssemblyAI({
   apiKey: 'e10a491c4dde4392b5cc848fa49ed09e',
 });
+
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path
+const ffmpeg = require('fluent-ffmpeg')
+ffmpeg.setFfmpegPath(ffmpegPath)
+
+function decodeAudio(pathencode) {
+    let track = pathencode;//your path to source file
+
+    ffmpeg(track)
+    //.setFfmpegPath("C:\\ffmpeg\\bin\\ffmpeg.exe")
+    .toFormat('mp3')
+    .on('error', (err) => {
+        console.log('An error occurred: ' + err.message);
+    })
+    .on('progress', (progress) => {
+        // console.log(JSON.stringify(progress));
+        console.log('Processing: ' + progress.targetSize + ' KB converted');
+    })
+    .on('end', () => {
+        console.log('Processing finished !');
+    })
+    .save('./PUBLIC/media/hello.mp3');//path where you want to save your file
+}
+
+
 
 var options = {
   key: fs.readFileSync(__dirname + '/ssl/key.key'),
@@ -45,11 +67,17 @@ async function getSummary(file){
       audio: `https://mangoplantations.net/media/${file}`,
       auto_highlights: true
     };
+     console.log("Text -------------")
     const transcript = await client.transcripts.transcribe(data);
+        console.log("Text -------------")
+    console.log(transcript)
+    console.log("Text -------------")
     let a = {texts: transcript.text, results: ""};
     for (let result of transcript.auto_highlights_result.results) {
         a.results = a.results + "\n" + result.count + "\n" + result.rank + ";";
     }
+    console.log(a)
+    console.log(JSON.stringify(a))
     return JSON.stringify(a)
   }
 
@@ -60,19 +88,40 @@ const storage = multer.diskStorage({
   },
   destination: function (req, file, cb) {
     cb(null, './PUBLIC/media')
-  },
+ },
 })
 
 const upload = multer({ storage })
 
 filter.route('/conversation')
-      .post(multer({ storage }).single('audio'), (req, res) => {
-          console.log(req);console.log(req?.file)
-          res.json(JSON.stringify(req))
+     .post(upload.any('audio'), (req, res) => {
+          console.log(req.files)
+         console.log(JSON.parse(JSON.stringify(req.body)))
+         console.log(req.files)
+         decodeAudio("./PUBLIC/media" + "/audio")
+         console.log(upload)
+         getSummary("hello.mp3")
+         res.json(getSummary("hello.mp3"))
+         // res.json(getSummary(req.file))
+        })
+        .post((req, res) => {
+          console.log(req.files)
+         console.log(JSON.parse(JSON.stringify(req.body)))
+         console.log(req.files)
+         console.log(upload)
+         res.json("gg:audio")
+         // res.json(getSummary(req.file))
+        })
+        .put((req, res) => {
+          console.log(req.files)
+          console.log(JSON.parse(JSON.stringify(req.body)))
+          console.log(req.body)
+          console.log(req.files)
+          res.json("gg")
          // res.json(getSummary(req.file))
         })
      .put(function(req, res) {
-        if(req.query.submit_user_info == "generate"){res.json(stocks_everything(req.body))
+        if(req.query.submit_user_info == "generate"){res.json(stocks_everything("hello.mp3"))
         }
      })
     .get(function(req, res) {
